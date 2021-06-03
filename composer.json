@@ -1,0 +1,27 @@
+{
+    "name": "rabbit-digital/sso-client",
+    "description": "Customize API around the Guzzle HTTP client",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "SSO Client",
+            "email": "digital@rabbit.co.th"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+          "RabbitDigital\\SsoClient\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "RabbitDigital\\SsoClient\\SsoServiceProvider"
+            ],
+            "aliases": {
+                "SsoClient": "RabbitDigital\\SsoClient\\SsoClientFacade"
+            }
+        }
+    }
+}
