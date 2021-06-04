@@ -29,11 +29,9 @@ class ValidatorException extends HttpException
     public function render() : Response
     {
         return response([
-            'status' => 422,
-            'error'  => [
-                'message' => '422 Unprocessable Entity',
-                'errors'  => $this->errors,
-            ],
+            'status_code' => 422,
+            'error_code' => 'validation_error',
+            'errors'  => $this->errors
         ], 422);
     }
 }
