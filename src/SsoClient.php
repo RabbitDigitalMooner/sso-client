@@ -183,9 +183,7 @@ class SsoClient extends Client
     protected function handleClientException(ClientException $exception)
     {
         $response     = $exception->getResponse();
-        $statusCode   = $response->getStatusCode();
         $responseData = json_decode($response->getBody()->getContents() ?? null, true);
-
         $errorCode = $responseData['error_code'] ?? null;
 
         if ($errorCode === ApplicationHttpException::APP_ERROR_CODE['USER_NOT_FOUND']) {
@@ -193,7 +191,7 @@ class SsoClient extends Client
         }
 
         if ($errorCode === ApplicationHttpException::APP_ERROR_CODE['VALIDATION_ERROR']) {
-            throw new ValidatorException($responseData['errors'], $exception);
+            throw new ValidatorException(json_encode($responseData['errors']), $exception);
         }
 
         if ($errorCode === LocationException::LOCATION_ERROR_CODE['COUNTRY_NOT_FOUND']) {
