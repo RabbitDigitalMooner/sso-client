@@ -30,8 +30,8 @@ class ValidatorException extends HttpException
     {
         return response([
             'status_code' => 422,
-            'error_code' => 'validation_error',
-            'errors'  => $this->errors
+            'error_code'  => 'validation_error',
+            'errors'      => $this->errors,
         ], 422);
     }
 }

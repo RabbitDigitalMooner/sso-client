@@ -184,7 +184,7 @@ class SsoClient extends Client
     {
         $response     = $exception->getResponse();
         $responseData = json_decode($response->getBody()->getContents() ?? null, true);
-        $errorCode = $responseData['error_code'] ?? null;
+        $errorCode    = $responseData['error_code'] ?? null;
 
         if ($errorCode === ApplicationHttpException::APP_ERROR_CODE['USER_NOT_FOUND']) {
             throw new UserNotFoundException(null, $exception);
