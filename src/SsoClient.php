@@ -18,7 +18,7 @@ use RabbitDigital\SsoClient\Exceptions\SessionInvalidException;
 use RabbitDigital\SsoClient\Exceptions\SsoServerErrorException;
 use RabbitDigital\SsoClient\Exceptions\SsoUnknownResponseException;
 use RabbitDigital\SsoClient\Exceptions\UserNotFoundException;
-use RabbitDigital\SsoClient\Exceptions\ValidatorException;
+use RabbitDigital\SsoClient\Exceptions\ValidationException;
 
 class SsoClient extends Client
 {
@@ -191,7 +191,7 @@ class SsoClient extends Client
         }
 
         if ($errorCode === ApplicationHttpException::APP_ERROR_CODE['VALIDATION_ERROR']) {
-            throw new ValidatorException(json_encode($responseData['errors']), $exception);
+            throw new ValidationException(json_encode($responseData['errors']), $exception);
         }
 
         if ($errorCode === LocationException::LOCATION_ERROR_CODE['COUNTRY_NOT_FOUND']) {

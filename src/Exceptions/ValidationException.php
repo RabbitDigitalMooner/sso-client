@@ -6,7 +6,7 @@ use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
-class ValidatorException extends HttpException
+class ValidationException extends HttpException
 {
     private mixed $errors;
 
