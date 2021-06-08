@@ -6,12 +6,12 @@ use Exception;
 
 class SessionInvalidException extends ApplicationHttpException
 {
-    const SESSION_ERROR_CODE = [
+    public const SESSION_ERROR_CODE = [
         'SESSION_INVALID' => 'session_expired_or_invalid',
     ];
 
     protected static array $sessionErrorHttpStatusCode = [
-        'session_expired_or_invalid' => 401,
+        self::APP_ERROR_CODE['session_expired_or_invalid'] => 401,
     ];
 
     public function __construct(

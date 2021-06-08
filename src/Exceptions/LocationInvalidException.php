@@ -6,16 +6,16 @@ use Exception;
 
 class LocationInvalidException extends ApplicationHttpException
 {
-    const LOCATION_ERROR_CODE = [
-        'COUNTRY_INVALID' => 'country_not_found',
+    public const LOCATION_ERROR_CODE = [
+        'COUNTRY_INVALID'  => 'country_not_found',
         'PROVINCE_INVALID' => 'province_not_found',
-        'DISTRICT_INVALID' => 'district_not_found'
+        'DISTRICT_INVALID' => 'district_not_found',
     ];
 
-    protected static $locationErrorHttpStatusCode = [
-        'country_not_found' => 404,
-        'province_not_found' => 404,
-        'district_not_found' => 404
+    protected static array $locationErrorHttpStatusCode = [
+        self::LOCATION_ERROR_CODE['LOCATION_ERROR_CODE']  => 404,
+        self::LOCATION_ERROR_CODE['PROVINCE_INVALID']     => 404,
+        self::LOCATION_ERROR_CODE['DISTRICT_INVALID']     => 404,
     ];
 
     public function __construct(

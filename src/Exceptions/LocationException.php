@@ -6,12 +6,12 @@ use Exception;
 
 class LocationException extends ApplicationHttpException
 {
-    const LOCATION_ERROR_CODE = [
+    public const LOCATION_ERROR_CODE = [
         'COUNTRY_NOT_FOUND' => 'country_not_found',
     ];
 
-    protected static $locationErrorHttpStatusCode = [
-        'country_not_found' => 404,
+    protected static array $locationErrorHttpStatusCode = [
+        self::APP_ERROR_CODE['LOCATION_ERROR_CODE'] => 404,
     ];
 
     public function __construct(
