@@ -19,6 +19,7 @@ use RabbitDigital\SsoClient\Exceptions\SsoServerErrorException;
 use RabbitDigital\SsoClient\Exceptions\SsoUnknownResponseException;
 use RabbitDigital\SsoClient\Exceptions\UserNotFoundException;
 use RabbitDigital\SsoClient\Exceptions\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class SsoClient extends Client
 {
@@ -185,6 +186,10 @@ class SsoClient extends Client
         $response     = $exception->getResponse();
         $responseData = json_decode($response->getBody()->getContents() ?? null, true);
         $errorCode    = $responseData['error_code'] ?? null;
+
+        if (is_null($errorCode) && $response->getStatusCode() === Response::HTTP_GONE) {
+            return $response;
+        }
 
         if ($errorCode === ApplicationHttpException::APP_ERROR_CODE['USER_NOT_FOUND']) {
             throw new UserNotFoundException(null, $exception);
