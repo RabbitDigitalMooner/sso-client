@@ -157,7 +157,7 @@ class SsoClient extends Client
 
             return $response;
         } catch (ClientException $exception) {
-            $this->handleClientException($exception);
+            return $this->handleClientException($exception);
         } catch (ServerException $exception) {
             $serviceName      = $this->getServiceNameFromUri($exception->getRequest());
             $serviceErrorCode = SsoServerErrorException::SSO_ERROR_CODE[$serviceName . '_SERVICE_SERVER_ERROR'];
