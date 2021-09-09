@@ -29,7 +29,7 @@ class SsoClient extends Client
     const SSO_LOCATION_SERVICE              = 'SSO_LOCATION';
     const SSO_EXTENDED_SERVICE              = 'SSO_EXTENDED';
     const SSO_OAUTH_SERVICE                 = 'SSO_OAUTH';
-    public const SSO_THOR_SERVICE           = 'SSO_THOR';
+    const SSO_THOR_SERVICE                  = 'SSO_THOR';
     const SSO_URL_SHORTENER_SERVICE         = 'SSO_URL_SHORTENER';
     const SSO_USER_SERVICE                  = 'SSO_USER';
 

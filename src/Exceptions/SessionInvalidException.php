@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace RabbitDigital\SsoClient\Exceptions;
 
 use Exception;
 
@@ -18,16 +18,13 @@ class SessionInvalidException extends ApplicationHttpException
         $message = null,
         $errors = null,
         ?Exception $previous = null,
-        array $headers = [],
-        $code = 0
+        array $headers = []
     ) {
         parent::__construct(
             self::SESSION_ERROR_CODE['SESSION_INVALID'],
             $message,
-            $errors,
             $previous,
             $headers,
-            $code
         );
     }
 
