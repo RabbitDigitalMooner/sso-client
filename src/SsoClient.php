@@ -29,6 +29,7 @@ class SsoClient extends Client
     const SSO_LOCATION_SERVICE              = 'SSO_LOCATION';
     const SSO_EXTENDED_SERVICE              = 'SSO_EXTENDED';
     const SSO_OAUTH_SERVICE                 = 'SSO_OAUTH';
+    public const SSO_THOR_SERVICE           = 'SSO_THOR';
     const SSO_URL_SHORTENER_SERVICE         = 'SSO_URL_SHORTENER';
     const SSO_USER_SERVICE                  = 'SSO_USER';
 
@@ -45,6 +46,7 @@ class SsoClient extends Client
             self::SSO_LOCATION_SERVICE                 => config('sso_service_url.location'),
             self::SSO_EXTENDED_SERVICE                 => config('sso_service_url.extended'),
             self::SSO_OAUTH_SERVICE                    => config('sso_service_url.oauth'),
+            self::SSO_THOR_SERVICE                     => config('sso_service_url.thor'),
             self::SSO_URL_SHORTENER_SERVICE            => config('sso_service_url.url_shortener'),
             self::SSO_USER_SERVICE                     => config('sso_service_url.user'),
         ];

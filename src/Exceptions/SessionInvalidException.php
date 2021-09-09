@@ -1,6 +1,6 @@
 <?php
 
-namespace RabbitDigital\SsoClient\Exceptions;
+namespace App\Exceptions;
 
 use Exception;
 
@@ -11,22 +11,27 @@ class SessionInvalidException extends ApplicationHttpException
     ];
 
     protected static array $sessionErrorHttpStatusCode = [
-        self::APP_ERROR_CODE['session_expired_or_invalid'] => 401,
+        'session_expired_or_invalid' => 401,
     ];
 
     public function __construct(
         $message = null,
-        Exception $previous = null,
+        $errors = null,
+        ?Exception $previous = null,
         array $headers = [],
         $code = 0
     ) {
-        parent::__construct(self::SESSION_ERROR_CODE['SESSION_INVALID'], $message, $previous, $headers, $code);
+        parent::__construct(
+            self::SESSION_ERROR_CODE['SESSION_INVALID'],
+            $message,
+            $errors,
+            $previous,
+            $headers,
+            $code
+        );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getSsoStatusCode(string $sessionErrorCode, Exception $previous = null) : int
+    protected function getSsoStatusCode(string $sessionErrorCode, ?Exception $previous = null) : int
     {
         return self::$sessionErrorHttpStatusCode[$sessionErrorCode];
     }
