@@ -14,24 +14,27 @@ use Psr\Http\Message\ResponseInterface;
 use RabbitDigital\SsoClient\Exceptions\ApplicationHttpException;
 use RabbitDigital\SsoClient\Exceptions\CountryNotFoundException;
 use RabbitDigital\SsoClient\Exceptions\LocationException;
+use RabbitDigital\SsoClient\Exceptions\MigrationUserInvalidException;
 use RabbitDigital\SsoClient\Exceptions\SessionInvalidException;
 use RabbitDigital\SsoClient\Exceptions\SsoServerErrorException;
 use RabbitDigital\SsoClient\Exceptions\SsoUnknownResponseException;
 use RabbitDigital\SsoClient\Exceptions\UserNotFoundException;
+use RabbitDigital\SsoClient\Exceptions\UserUnauthorizedException;
 use RabbitDigital\SsoClient\Exceptions\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 class SsoClient extends Client
 {
-    const SSO_AUTH_SERVICE                  = 'SSO_AUTH';
-    const SSO_BACKOFFICE_SERVICE            = 'SSO_BACKOFFICE';
-    const SSO_BIFROST_SERVICE               = 'SSO_BIFROST';
-    const SSO_LOCATION_SERVICE              = 'SSO_LOCATION';
-    const SSO_EXTENDED_SERVICE              = 'SSO_EXTENDED';
-    const SSO_OAUTH_SERVICE                 = 'SSO_OAUTH';
-    const SSO_THOR_SERVICE                  = 'SSO_THOR';
-    const SSO_URL_SHORTENER_SERVICE         = 'SSO_URL_SHORTENER';
-    const SSO_USER_SERVICE                  = 'SSO_USER';
+    const SSO_AUTH_SERVICE                     = 'SSO_AUTH';
+    const SSO_BACKOFFICE_SERVICE               = 'SSO_BACKOFFICE';
+    const SSO_BIFROST_SERVICE                  = 'SSO_BIFROST';
+    const SSO_LOCATION_SERVICE                 = 'SSO_LOCATION';
+    const SSO_EXTENDED_SERVICE                 = 'SSO_EXTENDED';
+    const SSO_OAUTH_SERVICE                    = 'SSO_OAUTH';
+    const SSO_THOR_SERVICE                     = 'SSO_THOR';
+    const SSO_URL_SHORTENER_SERVICE            = 'SSO_URL_SHORTENER';
+    const SSO_USER_SERVICE                     = 'SSO_USER';
+    const SSO_USER_V2_SERVICE                  = 'SSO_USER_V2';
 
     protected string $baseUrl = '';
     protected int $successStatusCode;
@@ -40,15 +43,16 @@ class SsoClient extends Client
     public function __construct(array $config = [])
     {
         self::$ssoServices = [
-            self::SSO_AUTH_SERVICE                     => config('sso_service_url.auth'),
-            self::SSO_BACKOFFICE_SERVICE               => config('sso_service_url.backoffice'),
-            self::SSO_BIFROST_SERVICE                  => config('sso_service_url.bifrost'),
-            self::SSO_LOCATION_SERVICE                 => config('sso_service_url.location'),
-            self::SSO_EXTENDED_SERVICE                 => config('sso_service_url.extended'),
-            self::SSO_OAUTH_SERVICE                    => config('sso_service_url.oauth'),
-            self::SSO_THOR_SERVICE                     => config('sso_service_url.thor'),
-            self::SSO_URL_SHORTENER_SERVICE            => config('sso_service_url.url_shortener'),
-            self::SSO_USER_SERVICE                     => config('sso_service_url.user'),
+            self::SSO_AUTH_SERVICE                        => config('sso_service_url.auth'),
+            self::SSO_BACKOFFICE_SERVICE                  => config('sso_service_url.backoffice'),
+            self::SSO_BIFROST_SERVICE                     => config('sso_service_url.bifrost'),
+            self::SSO_LOCATION_SERVICE                    => config('sso_service_url.location'),
+            self::SSO_EXTENDED_SERVICE                    => config('sso_service_url.extended'),
+            self::SSO_OAUTH_SERVICE                       => config('sso_service_url.oauth'),
+            self::SSO_THOR_SERVICE                        => config('sso_service_url.thor'),
+            self::SSO_URL_SHORTENER_SERVICE               => config('sso_service_url.url_shortener'),
+            self::SSO_USER_SERVICE                        => config('sso_service_url.user'),
+            self::SSO_USER_V2_SERVICE                     => config('sso_service_url.user_v2'),
         ];
 
         $config += [
@@ -207,6 +211,14 @@ class SsoClient extends Client
 
         if ($errorCode === SessionInvalidException::SESSION_ERROR_CODE['SESSION_INVALID']) {
             throw new SessionInvalidException;
+        }
+
+        if ($errorCode === ApplicationHttpException::APP_ERROR_CODE['UNAUTHORIZED']) {
+            throw new UserUnauthorizedException(null, $exception);
+        }
+
+        if ($errorCode === MigrationUserInvalidException::MIGRATION_ERROR_CODE['MIGRATION_VALIDATION_ERROR']) {
+            throw new MigrationUserInvalidException(null, $exception);
         }
 
         throw new SsoUnknownResponseException($response->getStatusCode(), $errorCode, $exception);

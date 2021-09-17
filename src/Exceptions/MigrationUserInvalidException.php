@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace RabbitDigital\SsoClient\Exceptions;
 
 use Exception;
 use GuzzleHttp\Exception\RequestException;
@@ -17,15 +17,13 @@ class MigrationUserInvalidException extends ApplicationHttpException
 
     public function __construct(
         $message = null,
-        $errors = null,
-        ?Exception $previous = null,
+        Exception $previous = null,
         array $headers = [],
         $code = 0
     ) {
         parent::__construct(
             self::MIGRATION_ERROR_CODE['MIGRATION_VALIDATION_ERROR'],
             $message,
-            $errors,
             $previous,
             $headers,
             $code
@@ -34,7 +32,9 @@ class MigrationUserInvalidException extends ApplicationHttpException
 
     protected function getSsoStatusCode(string $ssoErrorCode, ?Exception $previous = null) : int
     {
-        if (strpos($ssoErrorCode, '_service_server_error') !== false && $previous instanceof RequestException) {
+        if (str_contains($ssoErrorCode, '_service_server_error')
+            && $previous instanceof RequestException
+        ) {
             return $previous->getResponse()->getStatusCode();
         }
 

@@ -8,21 +8,23 @@ use GuzzleHttp\Exception\RequestException;
 class SsoServerErrorException extends ApplicationHttpException
 {
     const SSO_ERROR_CODE = [
-        'SSO_SERVICE_UNKNOWN_ERROR'                           => 'sso_service_unknown_error',
-        'SSO_AUTH_SERVICE_SERVER_ERROR'                       => 'sso_auth_service_server_error',
-        'SSO_AUTH_SERVICE_UNAVAILABLE'                        => 'sso_auth_service_unavailable',
-        'SSO_BACKOFFICE_SERVICE_SERVER_ERROR'                 => 'sso_backoffice_service_server_error',
-        'SSO_BACKOFFICE_SERVICE_UNAVAILABLE'                  => 'sso_backoffice_service_unavailable',
-        'SSO_BIFROST_SERVICE_SERVER_ERROR'                    => 'sso_bifrost_service_server_error',
-        'SSO_BIFROST_SERVICE_UNAVAILABLE'                     => 'sso_bifrost_service_unavailable',
-        'SSO_LOCATION_SERVICE_SERVER_ERROR'                   => 'sso_location_service_server_error',
-        'SSO_LOCATION_SERVICE_UNAVAILABLE'                    => 'sso_location_service_unavailable',
-        'SSO_THOR_SERVICE_SERVER_ERROR'                       => 'sso_thor_service_server_error',
-        'SSO_THOR_SERVICE_UNAVAILABLE'                        => 'sso_thor_service_unavailable',
-        'SSO_URL_SHORTENER_SERVICE_SERVER_ERROR'              => 'sso_url_shortener_service_server_error',
-        'SSO_URL_SHORTENER_SERVICE_UNAVAILABLE'               => 'sso_url_shortener_service_unavailable',
-        'SSO_USER_SERVICE_SERVER_ERROR'                       => 'sso_user_service_server_error',
-        'SSO_USER_SERVICE_UNAVAILABLE'                        => 'sso_user_service_unavailable',
+        'SSO_SERVICE_UNKNOWN_ERROR'                              => 'sso_service_unknown_error',
+        'SSO_AUTH_SERVICE_SERVER_ERROR'                          => 'sso_auth_service_server_error',
+        'SSO_AUTH_SERVICE_UNAVAILABLE'                           => 'sso_auth_service_unavailable',
+        'SSO_BACKOFFICE_SERVICE_SERVER_ERROR'                    => 'sso_backoffice_service_server_error',
+        'SSO_BACKOFFICE_SERVICE_UNAVAILABLE'                     => 'sso_backoffice_service_unavailable',
+        'SSO_BIFROST_SERVICE_SERVER_ERROR'                       => 'sso_bifrost_service_server_error',
+        'SSO_BIFROST_SERVICE_UNAVAILABLE'                        => 'sso_bifrost_service_unavailable',
+        'SSO_LOCATION_SERVICE_SERVER_ERROR'                      => 'sso_location_service_server_error',
+        'SSO_LOCATION_SERVICE_UNAVAILABLE'                       => 'sso_location_service_unavailable',
+        'SSO_THOR_SERVICE_SERVER_ERROR'                          => 'sso_thor_service_server_error',
+        'SSO_THOR_SERVICE_UNAVAILABLE'                           => 'sso_thor_service_unavailable',
+        'SSO_URL_SHORTENER_SERVICE_SERVER_ERROR'                 => 'sso_url_shortener_service_server_error',
+        'SSO_URL_SHORTENER_SERVICE_UNAVAILABLE'                  => 'sso_url_shortener_service_unavailable',
+        'SSO_USER_SERVICE_SERVER_ERROR'                          => 'sso_user_service_server_error',
+        'SSO_USER_SERVICE_UNAVAILABLE'                           => 'sso_user_service_unavailable',
+        'SSO_USER_V2_SERVICE_SERVER_ERROR'                       => 'sso_user_v2_service_server_error',
+        'SSO_USER_V2_SERVICE_UNAVAILABLE'                        => 'sso_user_v2_service_unavailable',
     ];
 
     protected static array $ssoErrorHttpStatusCode = [
