@@ -8,10 +8,12 @@ use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\TransferStats;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use RabbitDigital\SsoClient\Exceptions\ApplicationHttpException;
+use RabbitDigital\SsoClient\Exceptions\BindingNotFoundException;
 use RabbitDigital\SsoClient\Exceptions\CountryNotFoundException;
 use RabbitDigital\SsoClient\Exceptions\LocationException;
 use RabbitDigital\SsoClient\Exceptions\MigrationUserInvalidException;
@@ -21,6 +23,7 @@ use RabbitDigital\SsoClient\Exceptions\SsoUnknownResponseException;
 use RabbitDigital\SsoClient\Exceptions\UserNotFoundException;
 use RabbitDigital\SsoClient\Exceptions\UserUnauthorizedException;
 use RabbitDigital\SsoClient\Exceptions\ValidationException;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Response;
 
 class SsoClient extends Client
@@ -195,6 +198,20 @@ class SsoClient extends Client
 
         if (is_null($errorCode) && $response->getStatusCode() === Response::HTTP_GONE) {
             return $response;
+        }
+
+        if (is_null($errorCode)
+            && isset($responseData['status_code'])
+            && $response->getStatusCode() === Response::HTTP_BAD_REQUEST
+        ) {
+            throw new BadRequestException(Str::slug($responseData['message'], '_'), $response->getStatusCode());
+        }
+
+        if (is_null($errorCode)
+            && isset($responseData['status_code'])
+            && $response->getStatusCode() === Response::HTTP_NOT_FOUND
+        ) {
+            throw new BindingNotFoundException(Str::slug($responseData['message'], '_'));
         }
 
         if ($errorCode === ApplicationHttpException::APP_ERROR_CODE['USER_NOT_FOUND']) {
