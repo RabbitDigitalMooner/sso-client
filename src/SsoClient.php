@@ -113,7 +113,23 @@ class SsoClient extends Client
             throw new InvalidArgumentException($serviceName . ' is not in SSO service list');
         }
 
-        $this->baseUrl = self::$ssoServices[$serviceName];
+        $this->setBaseUrl($serviceName);
+    }
+    
+    public function setBaseUrl(string $baseUrl)
+    {
+        $this->baseUrl = $baseUrl;
+        if (env('PACT_TEST')) {
+            if (is_null(env('PACT_MOCK_SERVER_HOST'))) {
+                throw new BadRequestException('PACT_MOCK_SERVER_HOST is not set');
+            }
+
+            if (is_null(env('PACT_MOCK_SERVER_PORT'))) {
+                throw new BadRequestException('PACT_MOCK_SERVER_PORT is not set');
+            }
+
+            $this->baseUrl = 'http://' . env('PACT_MOCK_SERVER_HOST') . ':' . env('PACT_MOCK_SERVER_PORT');
+        }
     }
 
     /**
