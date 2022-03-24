@@ -116,7 +116,7 @@ class SsoClient extends Client
         $this->setBaseUrl($serviceName);
     }
     
-    public function setBaseUrl(string $baseUrl)
+    public function setBaseUrl(string $serviceName)
     {
         $this->baseUrl = self::$ssoServices[$serviceName];
         if (env('PACT_TEST')) {
