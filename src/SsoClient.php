@@ -118,7 +118,7 @@ class SsoClient extends Client
     
     public function setBaseUrl(string $baseUrl)
     {
-        $this->baseUrl = $baseUrl;
+        $this->baseUrl = self::$ssoServices[$serviceName];
         if (env('PACT_TEST')) {
             if (is_null(env('PACT_MOCK_SERVER_HOST'))) {
                 throw new BadRequestException('PACT_MOCK_SERVER_HOST is not set');
