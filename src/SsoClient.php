@@ -269,7 +269,7 @@ class SsoClient extends Client
         $requestUri = $request->getUri();
 
         foreach (self::$ssoServices as $name => $uri) {
-            if (str_contains($requestUri, $uri)) {
+            if (str_contains($requestUri, $uri) && !empty($uri)) {
                 return $name;
             }
         }
