@@ -68,7 +68,7 @@ class SsoClient extends Client
                     (string) $stats->getRequest()->getBody();
 
                 if (is_array($request) && isset($request['password'])) {
-                    $log['request']['password'] = 'HIDDEN_PASSWORD';
+                    $request['password'] = 'HIDDEN_PASSWORD';
                 } elseif (!is_array($request) && preg_match('/(password=.*+&?)|(&?password=.*+)/', $request)) {
                     $request = preg_replace('/(password=.*+&?)|(&?password=.*+)/', '', $request)
                         . '&password=HIDDEN_PASSWORD';
@@ -76,8 +76,8 @@ class SsoClient extends Client
 
                 $log = [
                     'uri'           => $stats->getEffectiveUri(),
-                    'transfer_time' => $stats->getTransferTime(),
-                    'handler_stats' => $stats->getHandlerStats(),
+                    // 'transfer_time' => $stats->getTransferTime(),
+                    // 'handler_stats' => $stats->getHandlerStats(),
                     'request_data'  => $request,
                 ];
 
